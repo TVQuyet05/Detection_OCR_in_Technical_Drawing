@@ -1,0 +1,6 @@
+opencv-python
+pycocotools
+tensorboard
+pandas
+matplotlib
+tqdm
