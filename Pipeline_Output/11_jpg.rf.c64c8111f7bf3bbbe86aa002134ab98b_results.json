@@ -1,0 +1,77 @@
+{
+    "image": "11_jpg.rf.c64c8111f7bf3bbbe86aa002134ab98b.jpg",
+    "objects": [
+        {
+            "id": 1,
+            "class": "PartDrawing",
+            "confidence": 0.995,
+            "bbox": {
+                "x1": 20,
+                "y1": 36,
+                "x2": 705,
+                "y2": 571
+            },
+            "ocr_content": "N/A"
+        },
+        {
+            "id": 2,
+            "class": "Table",
+            "confidence": 0.99,
+            "bbox": {
+                "x1": 753,
+                "y1": 243,
+                "x2": 966,
+                "y2": 561
+            },
+            "ocr_content": "<html><body><table><thead><tr><td></td><td>DESCRIPTON</td><td>FROM</td><td>TO</td></tr></thead><tbody><tr><td>5</td><td>TESTER CLAMP OFF</td><td>VALVES</td><td>P15-1</td></tr><tr><td>5</td><td>TESTER CLAMP ON</td><td>VALVE4</td><td>P15-2</td></tr><tr><td>E</td><td>TURRET HIGH MAG</td><td>VALVEI</td><td>PIS-3</td></tr><tr><td>E</td><td>TURRET LOW MAG</td><td>VALVE2</td><td>P15-4</td></tr><tr><td>5</td><td>STAGE AIR BEARING</td><td>VALVEE</td><td>P15-5</td></tr><tr><td>3</td><td>AIR SWITCH</td><td>OROKN</td><td>P15-6</td></tr><tr><td>9</td><td>STAGE AIRBEARINGPRESSURE</td><td>BLACK</td><td>P15-7</td></tr><tr><td>9</td><td>NPUT AIR PRESSURE</td><td>OLACK</td><td>P15-8</td></tr><tr><td>9</td><td>STAGE AIR GUAGE PONER</td><td>BROWN</td><td>P15-9</td></tr><tr><td>9</td><td>MPUT GUAGE POWER</td><td>BROWN</td><td>P15-10</td></tr><tr><td>28</td><td>24V GROUND</td><td>OLACK</td><td>P15-I1</td></tr><tr><td>E</td><td>SPARE</td><td>VALVES</td><td>P15-12</td></tr><tr><td>D</td><td>NOT USED</td><td>0</td><td>P15-13</td></tr><tr><td>o</td><td>NOT U USED</td><td>.</td><td>P15-14</td></tr><tr><td>o</td><td>NOT USED</td><td>O</td><td>P15-15</td></tr><tr><td>5</td><td>VALVESTHRU6</td><td>BLACK</td><td>81-GND</td></tr><tr><td>3</td><td>AIR S SWITCH</td><td>MAITE</td><td>T81-CND</td></tr><tr><td>9</td><td>PRESSURE GAUGE WIRES</td><td>BLUE</td><td>T81-GND</td></tr></tbody></table></body></html>"
+        },
+        {
+            "id": 3,
+            "class": "Table",
+            "confidence": 0.987,
+            "bbox": {
+                "x1": 618,
+                "y1": 536,
+                "x2": 967,
+                "y2": 629
+            },
+            "ocr_content": "<html><body><table><thead><tr><td></td><td></td></tr></thead><tbody><tr><td>Roa EL F</td><td></td></tr><tr><td></td><td>PNEUMATIC PANEL ASSEMBLY</td></tr><tr><td>n</td><td></td></tr><tr><td>SEE LH</td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td>D 25615</td></tr><tr><td></td><td>F ORS 0</td></tr></tbody></table></body></html>"
+        },
+        {
+            "id": 4,
+            "class": "Note",
+            "confidence": 0.972,
+            "bbox": {
+                "x1": 701,
+                "y1": 154,
+                "x2": 886,
+                "y2": 205
+            },
+            "ocr_content": "NOTES:UNLESS OTHERWISE SPECIFIED\n1.APPLY TEFLON TAPE.ITEM 40,TO ALL\nTHREADED FITTINGS AS REOUIRED."
+        },
+        {
+            "id": 5,
+            "class": "Table",
+            "confidence": 0.961,
+            "bbox": {
+                "x1": 771,
+                "y1": 41,
+                "x2": 972,
+                "y2": 93
+            },
+            "ocr_content": "<html><body><table><thead><tr><td></td><td></td></tr></thead><tbody><tr><td></td><td></td></tr><tr><td></td><td></td></tr><tr><td></td><td></td></tr></tbody></table></body></html>"
+        },
+        {
+            "id": 6,
+            "class": "Note",
+            "confidence": 0.599,
+            "bbox": {
+                "x1": 822,
+                "y1": 224,
+                "x2": 887,
+                "y2": 251
+            },
+            "ocr_content": "WIRING CHART"
+        }
+    ]
+}
