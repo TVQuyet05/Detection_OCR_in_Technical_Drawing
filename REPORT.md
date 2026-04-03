@@ -6,7 +6,7 @@
 
 ### 1.1 Dataset chính (Dataset_main)
 
-- Gán nhãn **57 ảnh bản vẽ kỹ thuật** bằng Roboflow
+- Gán nhãn **57 ảnh bản vẽ kỹ thuật** bằng Roboflow (bỏ 1 ảnh quá nhỏ)
 - Chia dữ liệu:
   - **30 ảnh train**
   - **27 ảnh validation**
@@ -17,7 +17,6 @@
 
 - Dataset ban đầu: **90 train / 27 valid**
 
----
 
 ### 1.2 Mở rộng dữ liệu (Data_stage1)
 
@@ -25,7 +24,7 @@
 - Gộp lại thành:
   - **[Data_stage1](https://drive.google.com/drive/folders/1epL1o3zXr_tbBwyoRoWCPlj2q-opj8BF?usp=sharing)**
 
----
+
 
 ### 1.3 Kết hợp dữ liệu (Data_stage2)
 
@@ -44,9 +43,9 @@
 ### 2.1 Phương pháp
 
 - Sử dụng **Faster R-CNN (Detectron2)**
-- Fine-tune từ **pretrained model (Model Zoo)**
+- Fine-tune từ **pretrained model (Model Zoo) (faster_rcnn_R_50_FPN_3x)**
 
----
+
 
 ### 2.2 Training Strategy
 
@@ -54,14 +53,13 @@
   - **Stage 1**: Train trên `Data_stage1` với Pretrained Model (Model Zoo).
   - **Stage 2**: Fine-tune tiếp trên `Data_stage2`, sử dụng trực tiếp checkpoint tốt nhất đạt được sau khi kết thúc Stage 1.
 
----
+
 
 ### 2.3 Kết quả
-
-- Đánh giá trên Dataset_main/ valid:
+So sánh model sau Stage1 và sau Stage2 : Đánh giá trên Dataset_main/ valid:
   - **mAP@50 tăng từ 0.667 → 0.765**
 
----
+
 
 ### 2.4 Model đã train
 
@@ -70,7 +68,7 @@
 - Upload tại:
   - https://huggingface.co/TVQuyet05/Detection_Tech_Draw
 
----
+
 
 ### 2.5 Cải thiện
 
@@ -116,27 +114,25 @@
   - Cột (columns)
   - Cell
 
----
+
 
 ### 4.2 Xử lý
 
 - OCR từng cell
 - Xuất kết quả dưới dạng **HTML table**
 
----
+
 
 ### 4.3 Hạn chế
 
 - Không bảo toàn được chính xác kiến trúc bảng với:
   - Bảng phức tạp
   - Bảng nhiều merge cell
-  - ảnh chất lượng thấp
+  - Ảnh chất lượng thấp
 
-
+---
 
 ## 5. 🔄 Pipeline dữ liệu
-
-### 5.1 Flow tổng thể
 
 
 - Input Image -> Detection (Faster R-CNN) -> Crop từng vùng (bbox) -> Phân loại theo label (Note → OCR (PP-OCRv4)) (Table → OCR (SLANet)) -> Post-processing -> Output JSON (kết quả detection và OCR)
@@ -154,7 +150,7 @@
 - Gradio (UI)
 - Hỗ trợ chạy Inference Pipeline (CLI) trước khi khởi tạo UI trên deploy.
 
----
+
 
 ### 6.3 Đặc điểm
 
@@ -170,12 +166,9 @@
 
 - Pipeline hoàn chỉnh:
   - Detect → Crop → OCR → Output
-- Model detection cải thiện rõ rệt (mAP tăng)
-- Có khả năng xử lý cả:
-  - Text thường
-  - Bảng
+- Model detection có độ chính xác cao.
+- Có khả năng xử lý OCR Note và Table.
 
----
 
 ### Hạn chế
 
@@ -183,7 +176,6 @@
 - Một số bbox vẫn cần refine thêm
 - Phụ thuộc tài nguyên CPU khi deploy
 
----
 
 ### Hướng phát triển
 

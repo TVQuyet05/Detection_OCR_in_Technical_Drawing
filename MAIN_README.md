@@ -2,7 +2,6 @@
 
 **Demo Trực tuyến:** [HuggingFace - Technical Draw Detection](https://huggingface.co/spaces/TVQuyet05/Technical_Draw_Detection)
 
-
 Dự án này là một hệ thống End-to-End tự động trích xuất thông tin từ Bản vẽ Kỹ thuật. Nó ứng dụng **Detectron2** để phân tách bố cục (PartDrawing, Note, Table), kết hợp với sức mạnh của **PaddleOCR (PP-OCRv4 + PPStructure)** để trích xuất Text và cấu trúc Bảng (HTML). Cuối cùng kết xuất ra file JSON kèm UI trực quan trên Gradio.
 
 ## 1. Cài đặt Môi trường (Conda / Local)
@@ -38,7 +37,6 @@ Các file trong `Preprocess_datasets/` dùng để tạo ra các bộ dataset ch
 - **Dữ liệu Data_Stage1:** [Tải tại đây](https://drive.google.com/drive/folders/1epL1o3zXr_tbBwyoRoWCPlj2q-opj8BF?usp=sharing)
 - **Dữ liệu Data_Stage2:** [Tải tại đây](https://drive.google.com/drive/folders/1BDvFjqtoybkZqCuujIoPi-AKFmNyTP2p?usp=sharing)
 
-
 ### Bước 2.2: Tiến hành Training (GPU bắt buộc)
 
 Bạn cần chạy file train tuỳ theo Giai đoạn. Mã nguồn này sử dụng cấu trúc Mạng **Faster R-CNN (ResNet-50 FPN)**:
@@ -65,16 +63,31 @@ python Detection/evaluate.py
 
 ## 3. Khởi chạy Hệ thống Inference & Demo UI
 
-Để nhận diện, bạn có thể tải Model [model_final_2.pth](https://huggingface.co/TVQuyet05/Detection_Tech_Draw) tốt nhất về máy tính.
 
-Trong trường hợp phục vụ chạy local, File này sẽ tự động:
+### 3.1 Chạy Test Pipeline (CLI) lưu ảnh crop & JSON
 
-1. Tải Model Weight phát hiện đối tượng tối ưu nhất từ Hugging Face (model_final_2.pth).
-2. Nạp Detectron2, PP-OCR, PPStructure-Table lên **RAM.
-3. Bật Web Service Server:
+Sử dụng file `pipeline_main_test.py` để test quá trình nhận diện và trích xuất. File này tiến hành chạy Detect, OCR và sẽ lưu trực tiếp các ảnh crop phân vùng (Note, Table, Part) cùng file kết quả `JSON` vào thư mục mặc định `Pipeline_Output/`.
+
+```bash
+python pipeline_main_test.py \
+    --image /path/to/drawing.jpg \
+    --weights /path/to/model_final_2.pth \
+    --outdir Pipeline_Output
+```
+
+### 3.2 Chạy qua giao diện Web (Gradio)
+
+Bật Web Service Server:
 
 ```bash
 python app.py
 ```
+
+Trong trường hợp chạy local app, pipeline sẽ tự động:
+
+1. Tải Model Weight phát hiện đối tượng tối ưu nhất từ Hugging Face (model_final_2.pth).
+2. Tải Detectron2, PP-OCR, PPStructure-Table.
+3. Thực hiện Detection và OCR ảnh đầu vào sau đó hiện các output cần thiết lên giao diện Web.
+
 
 _(Upload ảnh kĩ thuật -> Click Xử lý -> Tab Json/HTML tự động generate theo thời gian thực)._
