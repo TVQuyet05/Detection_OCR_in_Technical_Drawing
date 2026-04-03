@@ -15,8 +15,10 @@ CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 PROJECT_ROOT = os.path.dirname(CURRENT_DIR)
 
 # Đường dẫn đến tập validation
-VALID_JSON = os.path.join(PROJECT_ROOT, "Datasets", "Data_stage1", "valid", "_annotations.coco.json")
-VALID_DIR = os.path.join(PROJECT_ROOT, "Datasets", "Data_stage1", "valid")
+# VALID_JSON = os.path.join(PROJECT_ROOT, "Datasets", "Data_stage1", "valid", "_annotations.coco.json")
+# VALID_DIR = os.path.join(PROJECT_ROOT, "Datasets", "Data_stage1", "valid")
+VALID_JSON = os.path.join(PROJECT_ROOT, "Datasets", "Dataset_main", "valid", "_annotations.coco.json")
+VALID_DIR = os.path.join(PROJECT_ROOT, "Datasets", "Dataset_main", "valid")
 
 # Nếu tập dataset chưa được đăng ký trong session hiện tại, thực hiện đăng ký
 try:
@@ -38,10 +40,13 @@ def get_eval_cfg():
     cfg.MODEL.DEVICE = "cuda"  # hoặc "cpu" nếu chạy test không có GPU
     
     # Load weights model đã train thành công (file model_final.pth nằm trong thư mục output_model)
-    cfg.MODEL.WEIGHTS = os.path.join(CURRENT_DIR, "output_model", "model_final.pth")
+    cfg.MODEL.WEIGHTS = os.path.join(CURRENT_DIR, "output_model_stage2", "model_final.pth")
+
     
     # Thiết lập ngưỡng confidence score để evaluate (có thể tinh chỉnh, vd: lấy box có tin cậy > 50%)
-    cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.5   
+    cfg.MODEL.ROI_HEADS.SCORE_THRESH_TEST = 0.5
+
+    cfg.MODEL.ROI_HEADS.NMS_THRESH_TEST = 0.3
     
     return cfg
 
@@ -53,7 +58,7 @@ def main():
     
     print("Bắt đầu Evaluate tính mAP...")
     # COCOEvaluator sử dụng format của MS COCO để đo lường mAP
-    evaluator = COCOEvaluator("tech_draw_valid", output_dir=os.path.join(CURRENT_DIR, "output_model"))
+    evaluator = COCOEvaluator("tech_draw_valid", output_dir=os.path.join(CURRENT_DIR, "output_model_stage2"))
     val_loader = build_detection_test_loader(cfg, "tech_draw_valid")
     
     # Thực thi tính metrics

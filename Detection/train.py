@@ -5,6 +5,7 @@ from detectron2.data.datasets import register_coco_instances
 from detectron2.config import get_cfg
 from detectron2 import model_zoo
 from detectron2.engine import DefaultTrainer
+from detectron2.evaluation import COCOEvaluator
 
 # Cấu hình log
 setup_logger()
@@ -20,6 +21,14 @@ VALID_DIR = os.path.join(PROJECT_ROOT, "Datasets", "Data_stage1", "valid")
 
 register_coco_instances("tech_draw_train", {}, TRAIN_JSON, TRAIN_DIR)
 register_coco_instances("tech_draw_valid", {}, VALID_JSON, VALID_DIR)
+
+class CustomTrainer(DefaultTrainer):
+    @classmethod
+    def build_evaluator(cls, cfg, dataset_name, output_folder=None):
+        if output_folder is None:
+            output_folder = os.path.join(cfg.OUTPUT_DIR, "evaluation")
+            os.makedirs(output_folder, exist_ok=True)
+        return COCOEvaluator(dataset_name, output_dir=output_folder)
 
 def setup_cfg():
     cfg = get_cfg()
@@ -38,7 +47,7 @@ def setup_cfg():
     # Cấu hình Hyperparameters
     cfg.SOLVER.IMS_PER_BATCH = 2  # Phụ thuộc vào VRAM GPU, có thể tăng/giảm  
     cfg.SOLVER.BASE_LR = 0.00025  # Learning rate
-    cfg.SOLVER.MAX_ITER = 3000    # Số vòng lặp training
+    cfg.SOLVER.MAX_ITER = 2400    # Số vòng lặp training
     cfg.SOLVER.STEPS = []         # Đặt lại learning rate drop steps
     
     cfg.MODEL.ROI_HEADS.BATCH_SIZE_PER_IMAGE = 128
@@ -56,6 +65,9 @@ def setup_cfg():
     # Ensure Device is GPU since you requested GPU for training
     cfg.MODEL.DEVICE = "cuda"
     
+    # Cấu hình đánh giá (evaluate) trên tập validation sau mỗi 100 vòng (iterations)
+    cfg.TEST.EVAL_PERIOD = 100
+    
     return cfg
 
 if __name__ == "__main__":
@@ -63,6 +75,6 @@ if __name__ == "__main__":
     
     # Bắt đầu training 
     print("Bắt đầu training với Detectron2 trên GPU...")
-    trainer = DefaultTrainer(cfg)
+    trainer = CustomTrainer(cfg)
     trainer.resume_or_load(resume=False)
     trainer.train()

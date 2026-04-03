@@ -2,14 +2,26 @@ import os
 import cv2
 import logging
 import numpy as np
+
+# --- Bắt buộc fix lỗi của HuggingFace Spaces liên quan đến việc compile Detectron2 ---
+# Do detectron2 yêu cầu torch lúc setup nên việc cho vào requirements.txt sẽ dính lỗi "No module torch"
+import subprocess
+try:
+    import detectron2
+except ImportError:
+    print("Không tìm thấy detectron2, bắt đầu clone và build từ git (chỉ diễn ra 1 lần)...")
+    subprocess.run(["pip", "install", "git+https://github.com/facebookresearch/detectron2.git", "--no-build-isolation"], check=True)
+
 import gradio as gr
+from huggingface_hub import hf_hub_download
 from pipeline_main import TechnicalDrawingPipeline
 
 # Thiết lập log level
 logging.basicConfig(level=logging.INFO)
 
-# Đường dẫn mặc định của mô hình lúc deploy (cần trỏ đúng path model của bạn)
-MODEL_WEIGHTS = "Detection/output_model/model_final.pth" 
+# Thay đổi cấu hình tải model từ mục Hugging Face Repo
+REPO_ID = "TVQuyet05/Detection_Tech_Draw"
+FILENAME = "model_final_2.pth"  # Tên file weights đã được upload lên Hugging Face Hub
 
 # Cờ để kiểm tra đã load mô hình chưa
 pipeline = None
@@ -17,10 +29,16 @@ pipeline = None
 def load_pipeline():
     global pipeline
     if pipeline is None:
-        if not os.path.exists(MODEL_WEIGHTS):
-            raise FileNotFoundError(f"Không tìm thấy model weights tại: {MODEL_WEIGHTS}. Vui lòng kiểm tra lại trước khi deploy.")
+        print("Đang kiểm tra và tải model weights từ HuggingFace Hub...")
+        try:
+            # Tự động tải từ Hugging Face và lưu cache, nếu đã tải rồi nó sẽ dùng file local cache rất nhanh
+            model_path = hf_hub_download(repo_id=REPO_ID, filename=FILENAME)
+            print(f"Đã tải thành công model tại: {model_path}")
+        except Exception as e:
+            raise RuntimeError(f"Lỗi tải model từ HuggingFace Hub: {e}")
+
         # Khởi tạo mô hình chỉ 1 lần duy nhất cho toàn bộ app
-        pipeline = TechnicalDrawingPipeline(model_weights=MODEL_WEIGHTS, output_dir="Pipeline_Output")
+        pipeline = TechnicalDrawingPipeline(model_weights=model_path, output_dir="Pipeline_Output")
     return pipeline
 
 # Bảng màu hiển thị (BGR array -> RGB array) khi vẽ OpenCV

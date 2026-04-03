@@ -2,4 +2,5 @@ Datasets/
 .vscode/
 __pycache__/
 output_model/
+output_model_stage2/
 Pipeline_Output/

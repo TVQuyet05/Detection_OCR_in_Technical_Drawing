@@ -1,0 +1,11 @@
+ninja
+torch
+torchvision
+pycocotools
+paddlepaddle==2.6.2
+paddleocr==2.7.3
+numpy<1.27
+opencv-python-headless
+gradio
+matplotlib
+huggingface_hub
