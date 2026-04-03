@@ -20,8 +20,8 @@
 
 ### 1.2 Mở rộng dữ liệu (Data_stage1)
 
-- Thu thập thêm **2 dataset technical drawing trên Roboflow**
-- Gộp lại thành:
+- Thu thập thêm *2 dataset technical drawing trên Roboflow
+- Gộp lại thành Data_stage1 **(1739 train/ 235 valid)**:
   - **[Data_stage1](https://drive.google.com/drive/folders/1epL1o3zXr_tbBwyoRoWCPlj2q-opj8BF?usp=sharing)**
 
 
@@ -29,7 +29,7 @@
 ### 1.3 Kết hợp dữ liệu (Data_stage2)
 
 - Lấy thêm **90 ảnh từ Data_stage1/valid**
-- Gộp vào Dataset_main
+- Gộp vào Dataset_main/ train
 
 👉 Dataset sau khi mở rộng:
 
@@ -182,5 +182,6 @@ So sánh model sau Stage1 và sau Stage2 : Đánh giá trên Dataset_main/ valid
 - Cải thiện Table Structure Recognition
 - Thử các model detection mới
 - Tối ưu tốc độ inference khi deploy
+- Chỉnh sửa giao diện Web đẹp hơn
 
 ---
