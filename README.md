@@ -15,4 +15,4 @@ python_version: "3.10"
 Check out the configuration reference at https://huggingface.co/docs/hub/spaces-config-reference
 
 
-<!-- Main content in file MAIN_README.md and REPORT.md-->  
+**Main content in file MAIN_README.md and REPORT.md  

@@ -125,6 +125,12 @@ class TechnicalDrawingPipeline:
             
             crop_img = np.ascontiguousarray(img[y1:y2, x1:x2])
             
+            # Lưu ảnh crop
+            crop_dir = os.path.join(self.output_dir, f"crops_{img_basename}")
+            os.makedirs(crop_dir, exist_ok=True)
+            crop_path = os.path.join(crop_dir, f"crop_{i+1}_{class_name}.jpg")
+            cv2.imwrite(crop_path, crop_img)
+            
             ocr_content = ""
             ocr_confidence = None
             
@@ -225,7 +231,11 @@ class TechnicalDrawingPipeline:
             result_json["objects"].append(obj_info)
             print(f" -> Đã trích xuất xong đối tượng {i+1} [{class_name}]")
             
-        print(f"\n[HOÀN TẤT] Bản vẽ đã được bóc tách và phân tích xong.")
+        json_path = os.path.join(self.output_dir, f"{img_basename}_results.json")
+        with open(json_path, 'w', encoding='utf-8') as f:
+            json.dump(result_json, f, indent=4, ensure_ascii=False)
+            
+        print(f"\n[HOÀN TẤT] Bản vẽ đã được bóc tách và phân tích xong. Kết quả (JSON & hình ảnh Crop) lưu tại: {self.output_dir}")
         
         return result_json
 
